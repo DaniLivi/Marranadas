@@ -1,0 +1,78 @@
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage[nodisplayskipstretch]{setspace} 
+\setstretch{7} 
+
+<<echo=FALSE, results=hide>>=
+options(OutDec= ",")
+
+# Datos iniciales
+
+nom <-sample(noms,1)
+cognom <-sample(cognoms,1)
+
+pr1 <- sample(seq(0.6,0.8,by=0.01),1)
+pr2 <- 1-pr1
+
+n1 <- sample(3:6,1)
+n2 <- sample(3:8,1)
+n2_nom <-c("tercer","cuarto","quinto","sexto","séptimo","octavo")
+
+sol1 <- pr1^n1
+sol2 <- (pr1^(n2-1))*pr2
+
+#N <- sample(6:10,1)
+#n1 <- sample(3:(N-5),1)
+#n2 <- N-n1
+#,"noveno","décimo")#,"undécimo","duodécimo","decimotercer","decimocuarto","decimoquinto")
+
+# Preguntas y respuestas
+
+questions <- solutions <- rep(list(""), 2)
+type <- rep(list("num"), 2)
+
+p1 <- c("Pregunta a)")
+p2 <- c("Pregunta b)")
+
+questions[[1]] <- p1
+questions[[2]] <- p2
+
+solutions[[1]] <- round(sol1,4)
+solutions[[2]] <- round(sol2,4)
+@
+
+\begin{question}
+\Sexpr{nom} \Sexpr{cognom} juega en un equipo de baloncesto. En un entrenamiento normal, \Sexpr{nom} tiene una fiabilidad del $\Sexpr{pr1*100} \ \%$ en lanzamientos de tres puntos. Con esta información, responde a las siguientes preguntas:
+
+\begin{itemize}
+\item \textbf{a)} ¿Cuál es la probabilidad de conseguir una racha de $\Sexpr{n1}$ triples seguidos?
+\item \textbf{b)} En una serie de lanzamientos consecutivos, ¿cuál es la probabilidad de que el primer fallo ocurra en el \Sexpr{n2_nom[n2-2]} lanzamiento?
+\end{itemize}
+
+\textbf{Nota:} introduce las probabilidades en tanto por uno y con cuatro decimales, usando la coma como separador decimal.
+
+<<echo=FALSE,results=tex>>=
+answerlist(unlist(questions))
+@
+\end{question}
+
+\begin{solution}
+<<echo=FALSE, results=hide, results=tex>>=
+answerlist(unlist(solutions))
+@
+\end{solution}
+
+<<echo=FALSE, results=hide>>=
+options(OutDec= ".")
+@
+
+%% \extype{cloze}
+%% \exsolution{\Sexpr{paste(solutions, collapse = "|")}}
+%% \exclozetype{\Sexpr{paste(type, collapse = "|")}}
+%% \exname{Exe_1_2}
+%% \extitle{Exe_1_2}
+%% \extol{0.01|0.01}    

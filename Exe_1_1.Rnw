@@ -1,0 +1,81 @@
+\usepackage[utf8x]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish]{babel}
+\usepackage{amsmath}
+\usepackage{graphicx}
+\usepackage{color}
+\usepackage[nodisplayskipstretch]{setspace} 
+\setstretch{7} 
+
+<<echo=FALSE, results=hide>>=
+options(OutDec= ",")
+
+# Datos iniciales
+
+n1 <- sample(6:12,1)
+paleta <- c("rojo","amarillo","verde","azul","naranja","lila","marrón","granate","morado","violeta")
+n2 <- sample(4:8,1)
+colores <- sample(paleta,n2,replace=FALSE)
+N <- n1*n2
+
+casos <- c("par","impar")
+rand <- sample(1:2,1)
+
+if (rand==1){sol1 <- (floor(n1/2)*(n2-1))/N}
+if (rand==2){sol1 <- (ceiling(n1/2)*(n2-1))/N}
+
+if (rand==1){sol2 <- (ceiling(n1/2)/n1)+(1/n2)-(ceiling(n1/2)/N)}
+if (rand==2){sol2 <- (floor(n1/2)/n1)+(1/n2)-(floor(n1/2)/N)}
+
+# Preguntas y respuestas
+
+questions <- solutions <- rep(list(""), 2)
+type <- rep(list("num"), 2)
+
+p1 <- c("Pregunta a)")
+p2 <- c("Pregunta b)")
+
+questions[[1]] <- p1
+questions[[2]] <- p2
+
+solutions[[1]] <- round(sol1,3)
+solutions[[2]] <- round(sol2,3)
+@
+
+\begin{question}
+Disponemos de una baraja de cartas perfectamente barajada, la cual consiste en $\Sexpr{n2}$ series de colores, cada una numerada con los números del 1 al $\Sexpr{n1}$. En total hay $\Sexpr{n2} \cdot \Sexpr{n1}=\Sexpr{N}$ cartas. Los colores son los siguientes:
+
+<<echo=FALSE, results=verbatim>>=
+cat(colores)
+@
+
+Supongamos que realizamos el experimento de extraer una carta al azar de la baraja. Con la información disponible, responde a las siguientes preguntas:
+
+\begin{itemize}
+\item \textbf{a)} ¿Cuál es la probabilidad de extraer una carta \Sexpr{casos[rand]} y que no sea de color \Sexpr{colores[1]}?
+\item \textbf{b)} ¿Cuál es la probabilidad de extraer una carta \Sexpr{casos[-rand]} o de color \Sexpr{colores[3]}?
+\end{itemize}
+
+\textbf{Nota:} introduce las probabilidades en tanto por uno y con tres decimales, usando la coma como separador decimal.
+
+<<echo=FALSE,results=tex>>=
+answerlist(unlist(questions))
+@
+\end{question}
+
+\begin{solution}
+<<echo=FALSE, results=hide, results=tex>>=
+answerlist(unlist(solutions))
+@
+\end{solution}
+
+<<echo=FALSE, results=hide>>=
+options(OutDec= ".")
+@
+
+%% \extype{cloze}
+%% \exsolution{\Sexpr{paste(solutions, collapse = "|")}}
+%% \exclozetype{\Sexpr{paste(type, collapse = "|")}}
+%% \exname{Exe_1_1}
+%% \extitle{Exe_1_1}
+%% \extol{0.01|0.01}     
